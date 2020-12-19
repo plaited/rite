@@ -1,14 +1,15 @@
 
 import equal from 'fast-deep-equal'
 import serialize from 'serialize-to-js'
+import {unescape} from '@assembl-dev/utils'
 
 const is = (actual, expected, message) => {
   if(equal(actual, expected)) return message
   const msg = `
   ${message}
   ----------
-    - actual: ${serialize(actual)}
-    + expected: ${serialize(expected)}
+    - actual: ${unescape(serialize(actual))}
+    + expected: ${unescape(serialize(expected))}
 `
   const err = new Error()
   const internal = /\/assert.js|@assembl-dev\/assert.js|@assembl-dev\/dist\/assert.js/
