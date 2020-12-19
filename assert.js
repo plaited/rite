@@ -1,28 +1,5 @@
-
-import equal from 'fast-deep-equal'
-import serialize from 'serialize-to-js'
-import {unescape} from '@assembl-dev/utils'
-
-const is = (actual, expected, message) => {
-  if(equal(actual, expected)) return message
-  const msg = `
-  ${message}
-  ----------
-    - actual: ${unescape(serialize(actual))}
-    + expected: ${unescape(serialize(expected))}
-`
-  const err = new Error()
-  const internal = /\/assert.js|@assembl-dev\/assert.js|@assembl-dev\/dist\/assert.js/
-  const filterStackLine = l => (l && !internal.test(l) && !l.startsWith('Error'))
-  const stack = (err.stack || '')
-    .split('\n')
-    .map(l => l.trim())
-    .filter(filterStackLine)
-    .join('\n')
-  err.stack = stack
-  err.message = msg
-  throw err
-}
+import {trueTypeOf} from '@assembl-dev/utils'
+import chai from 'chai'
 
 const requiredKeys = ['given', 'should', 'actual', 'expected']
 const concatToString = (keys, key, index) => keys + (index ? ', ' : '') + key
@@ -43,7 +20,8 @@ export const assert = (args = {}) => {
     expected = undefined,
   } = args
   const message = `Given ${given}: should ${should}`
-  is(actual, expected, message)
+  const primitive = trueTypeOf(expected) === 'string' || 'number' || 'bigint' || 'boolean' || 'symbol'
+  primitive ? chai.assert.equal(actual, expected, message) : chai.assert.deepEqual(actual, expected, message)
 }
 
 const noop = () => {}
@@ -55,7 +33,7 @@ export const Try = (fn = noop, ...args) => {
   try {
     return catchPromise(fn(...args))
   } catch (err) {
-    return err
+    return err.toString()
   }
 }
 

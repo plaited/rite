@@ -47,7 +47,7 @@ describe('assert', () => {
       given: 'NaN',
       should: 'throw',
       actual: Try(sum, 1, NaN),
-      expected: new TypeError('NaN'),
+      expected: new TypeError('NaN').toString(),
     });
   })
   it('async()', async () => {
@@ -101,4 +101,4 @@ Take some text to search and return a function which takes a pattern and returns
 ```ts
 export function Try<U extends any[], V>(fn: (...args: U) => V, ...args: U): any | Promise<any>;
 ```
-Test is a function throws an error. It take the function which can be a synchronous or asynchronous along with the n arguments and catches the thrown error.
+Test if a function throws an error. It take the function which can be a synchronous or asynchronous along with n arguments. It catches the thrown error and returns `error.toString()`. 

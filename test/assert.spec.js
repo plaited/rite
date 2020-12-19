@@ -34,12 +34,11 @@ describe('assert', () => {
       actual: sum(1, -4),
       expected: -3,
     })
-  
     assert({
       given: 'NaN',
       should: 'throw',
       actual: Try(sum, 1, NaN),
-      expected: new TypeError('NaN'),
+      expected: new TypeError('NaN').toString(),
     })
   })
   it('async()', async () => {
@@ -57,7 +56,7 @@ describe('assert', () => {
       assert({
         given: 'an async function that throws',
         should: 'await and return the value of the error',
-        actual: (await Try(async () => { throw error }, 'irrelivant')).toString(),
+        actual: (await Try(async () => { throw error }, 'irrelivant')),
         expected: error.toString(),
       })
     }
