@@ -1,10 +1,26 @@
 
 import equal from 'fast-deep-equal'
+import serialize from 'serialize-to-js'
 
 const is = (actual, expected, message) => {
   if(equal(actual, expected)) return message
-  /* c8 ignore next */
-  throw new Error(message)
+  const msg = `
+  ${message}
+  ----------
+    - actual: ${serialize(actual)}
+    + expected: ${serialize(expected)}
+`
+  const err = new Error()
+  const internal = /\/assert.js|@assembl-dev\/assert.js|@assembl-dev\/dist\/assert.js/
+  const filterStackLine = l => (l && !internal.test(l) && !l.startsWith('Error'))
+  const stack = (err.stack || '')
+    .split('\n')
+    .map(l => l.trim())
+    .filter(filterStackLine)
+    .join('\n')
+  err.stack = stack
+  err.message = msg
+  throw err
 }
 
 const requiredKeys = ['given', 'should', 'actual', 'expected']
