@@ -1,4 +1,4 @@
-import {trueTypeOf} from '@assembl-dev/utils'
+import {trueTypeOf} from '@plaited/utils'
 import chai from 'chai'
 
 const requiredKeys = ['given', 'should', 'actual', 'expected']

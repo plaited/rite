@@ -17,7 +17,7 @@ Then add these scripts to your package.json
 ## Example
 
 ```js
-import { assert, Try, match } from '@assembl-dev/assert'
+import { assert, Try, match } from '@plaited/assert'
 describe('assert', () => {
   it('sum()', () => {
     const should = 'return the correct sum';
