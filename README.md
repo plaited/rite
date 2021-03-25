@@ -1,10 +1,10 @@
-# assert
+# RITEway-Mocha
 Assert library based on [riteway](https://github.com/ericelliott/riteway)
 Use with Mocha
 
 ## Install
 
-`npm install --save-dev riteway`
+`npm install --save-dev riteway-mocha`
 
 Then add these scripts to your package.json
 ```json
@@ -80,7 +80,7 @@ describe('assert', () => {
 ## assert
 ```ts
 interface Assertion<T> {
-  readonly given: any
+  readonly given: string
   readonly should: string
   readonly actual: T
   readonly expected: T
@@ -96,6 +96,13 @@ Note that assert uses a [deep equality](https://www.npmjs.com/package/fast-deep-
 export function match(text: string): (pattern: string | RegExp) => string;
 ```
 Take some text to search and return a function which takes a pattern and returns the matched text, if found, or an empty string. The pattern can be a string or regular expression.
+
+## wait
+
+```ts
+export function wait(ms: number): Promise<any>;
+```
+A utility function to used to pause execution. It is useful in browser testing.
 
 ## Try
 ```ts
