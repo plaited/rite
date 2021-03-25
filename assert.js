@@ -1,6 +1,7 @@
-import {trueTypeOf} from '@plaited/utils'
 import chai from 'chai'
 
+const trueTypeOf = obj =>
+  Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
 const requiredKeys = ['given', 'should', 'actual', 'expected']
 const concatToString = (keys, key, index) => keys + (index ? ', ' : '') + key
 
@@ -42,3 +43,7 @@ export const match = text => pattern => {
   const matched = text.match(RE)
   return matched ? matched[0] : ''
 }
+
+export const wait = async ms => new Promise(resolve => {
+  setTimeout(resolve, ms)
+})

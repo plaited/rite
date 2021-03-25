@@ -1,4 +1,4 @@
-import {assert, Try, match} from '../assert.js'
+import {assert, Try, match, wait} from '../assert.js'
 const sum = (...args) => {
   if (args.some(v => Number.isNaN(v))) throw new TypeError('NaN')
   return args.reduce((acc, n) => acc + n, 0)
@@ -60,6 +60,15 @@ describe('assert', () => {
         expected: error.toString(),
       })
     }
+  })
+  it('wait()', async () => {
+    await wait(20)
+    assert({
+      given: 'a wait call',
+      should: 'should pause for 20ms',
+      actual: true,
+      expected: true,
+    })
   })
   it('match', () => {
     {
