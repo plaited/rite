@@ -65,10 +65,8 @@
     "eslint-plugin-compat": "4.1.4",
     "format-package": "7.0.0",
     "husky": "8.0.3",
-    "lerna": "^7.0.2",
     "pinst": "3.0.0",
     "playwright": "1.35.1",
-    "prettier": "2.8.8",
     "sinon": "15.1.2",
     "typescript": "5.1.3"
   }
