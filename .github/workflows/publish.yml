@@ -1,0 +1,54 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version tag (e.g., 1.0.0)'
+        required: true
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Validate input version
+        run: |
+          version="${{ github.event.inputs.version }}"
+          if [[ ! $version =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(-([a-zA-Z0-9_-]+))?$ ]]; then
+            echo "Error: Version must have the format 'x.y.z' or 'x.y.z-<string>', where x, y, and z are numbers."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Setup
+        run: |
+          npm install -g bun npm@latest
+          bun install
+          bun run build
+
+      - name: Version
+        run:  |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+          npm version ${{ github.event.inputs.version }}
+          git push origin main
+
+      - name: Publish
+        run:  |
+          echo "@plaited:registry=https://registry.npmjs.org/" > .npmrc
+          echo "registry=https://registry.npmjs.org/" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          npm whoami
+          npm config set registry https://registry.npmjs.org/
+          npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_PAT }}

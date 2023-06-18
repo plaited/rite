@@ -1,0 +1,1 @@
+[label](../plaited/libs/rite/CHANGELOG.md)
