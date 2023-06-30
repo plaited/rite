@@ -21,10 +21,9 @@ RITEWay forces us to answer them.
 
 - [@web/test-runner](https://www.npmjs.com/package/@web/test-runner) >= 0.16.1
 
-### JavaScript runtime options
+### JavaScript runtime 
+- [Node](https://nodejs.org/en) >= v18
 
-1. [Node](https://nodejs.org/en) >= v18
-2. [Bun](https://bun.sh/) >= 0.5.9
 
 ## Installing
 

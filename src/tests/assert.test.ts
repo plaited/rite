@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { test, expect } from 'bun:test'
+import { test, expect } from '@jest/globals'
 import sinon from 'sinon'
 import { assert } from '../assert.js'
 
@@ -18,27 +18,27 @@ const resolveAfter = () =>
 test('assert: sum()', () => {
   const should = 'return the correct sum'
 
-  expect(() =>assert({
+  expect(() => assert({
     given: 'no arguments',
     should: 'return 0',
     actual: sum(),
     expected: 0,
   })).not.toThrow()
 
-  expect(() =>assert({
+  expect(() => assert({
     given: 'zero',
     should,
     actual: sum(2, 0),
     expected: 2,
   })).not.toThrow()
 
-  expect(() =>assert({
+  expect(() => assert({
     given: 'negative numbers',
     should,
     actual: sum(1, -4),
     expected: -3,
   })).not.toThrow()
-  expect(() =>assert({
+  expect(() => assert({
     given: 'NaN',
     should: 'throw',
     actual: assert.throws(sum, 1, NaN),
@@ -75,7 +75,7 @@ test('assert: throw returns undefined when not thrown', async () => {
   expect(async () => {
     const error = new Error('unacceptable')
     const reverence = (attitude: string, pass = false) => {
-      if(!pass && attitude === 'irreverent') {
+      if (!pass && attitude === 'irreverent') {
         throw error
       }
     }
@@ -107,7 +107,7 @@ test('match()', () => {
   const pattern = 'Dialog Title'
   const contains = assert.match(textToSearch)
 
-  expect(() =>assert({
+  expect(() => assert({
     given,
     should,
     actual: contains(pattern),
@@ -117,7 +117,7 @@ test('match()', () => {
 
 test('assert: required params', async () => {
   //@ts-ignore: testing error message
-  const noParams =  async () => await assert({})
+  const noParams = async () => await assert({})
   let spy = sinon.spy(noParams)
   try {
     await spy()
@@ -126,7 +126,7 @@ test('assert: required params', async () => {
   }
   expect(spy.calledOnce).toBe(true)
   //@ts-ignore: testing error message
-  const partialParam =  async () => await assert({ given: 'some keys', should: 'find the missing keys' })
+  const partialParam = async () => await assert({ given: 'some keys', should: 'find the missing keys' })
   spy = sinon.spy(partialParam)
   try {
     await spy()
@@ -145,20 +145,20 @@ test('assert: throws on failure', () => {
   })).toThrow('{"message":"Given number: should equal number","actual":0,"expected":1}')
 
 
-  expect(()=> assert({
+  expect(() => assert({
     given: 'regex',
     should: 'equal regex',
     actual: /test/i,
     expected: /test/,
   })).toThrow('{"message":"Given regex: should equal regex","actual":{},"expected":{}}')
- 
+
   expect(() => assert({
     given: 'false',
     should: 'equal false',
     actual: null,
     expected: false,
   })).toThrow('{"message":"Given false: should equal false","actual":null,"expected":false}')
-   
+
   expect(() => assert({
     given: 'array',
     should: 'equal array',
