@@ -29,7 +29,7 @@
     "lint:fix": "yarn lint --fix --quiet",
     "prepare": "husky install",
     "test": "yarn test:assert && yarn test:helpers",
-    "test:assert": "test src/**/*.test.ts",
+    "test:assert": "jest src/**/*.test.ts",
     "test:helpers": "web-test-runner"
   },
   "lint-staged": {
