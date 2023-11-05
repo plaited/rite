@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Install and link dependencies
-yarn install
+bun install
 
-# Install playwright dependencies
-npx playwright install
+# Install Playwright dependencies
+bunx playwright install
 
 # Run build
-yarn run build 
+bun run build 
 
 # Run test
-yarn run test
+bun run test
