@@ -1,6 +1,6 @@
-[![Tests](https://github.com/plaited/rite/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/plaited/rite/actions/workflows/tests.yml)
-
 # @plaited/rite
+
+[![Tests](https://github.com/plaited/rite/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/plaited/rite/actions/workflows/tests.yml)
 
 Modern web unit test framework based on RITEway.
 
