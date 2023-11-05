@@ -13,6 +13,14 @@
     "url": "https://github.com/plaited/rite/issues"
   },
   "homepage": "https://github.com/plaited/rite/tree/main#readme",
+  "keywords": [
+    "web",
+    "test",
+    "runner",
+    "testrunner",
+    "rite",
+    "framework"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
@@ -22,6 +30,9 @@
   "files": [
     "./dist/**"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx,.js,.cjs",
