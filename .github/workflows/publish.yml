@@ -9,7 +9,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-22.04
-
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT }}
+      NPM_TOKEN: ${{ secrets.NPM_PAT }}
     steps:
       - name: Validate input version
         run: |
@@ -18,26 +20,20 @@ jobs:
             echo "Error: Version must have the format 'x.y.z' or 'x.y.z-<string>', where x, y, and z are numbers."
             exit 1
           fi
-
       - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_PAT }}
-
-      - uses: oven-sh/setup-bun@v1
-
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
       - name: Setup
         run: |
           bun install
           bun run build
-
       - name: Version
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           npm version ${{ github.event.inputs.version }}
-          git push origin main
-
+          gh release create ${{ github.event.inputs.version }} --generate-notes
       - name: Publish
         run: |
           echo "@plaited:registry=https://registry.npmjs.org/" > .npmrc
@@ -46,5 +42,3 @@ jobs:
           npm whoami
           npm config set registry https://registry.npmjs.org/
           npm publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_PAT }}
