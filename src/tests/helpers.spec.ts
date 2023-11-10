@@ -1,8 +1,4 @@
 import { test } from '../index.js'
-import { findByAttribute } from '../find-by-attribute.js'
-import { findByText } from '../find-by-text.js'
-import { fireEvent } from '../fire-event.js'
-
 test('findByAttribute: light dom', async (t) => {
   // Create two element to be used to validate helper
   const firstEl = document.createElement('div')
@@ -18,7 +14,7 @@ test('findByAttribute: light dom', async (t) => {
   //Append elements to body
   document.body.append(firstEl, secondEl)
   // Search for secondEl
-  const second = await findByAttribute('data-test', 'second')
+  const second = await t.findByAttribute('data-test', 'second')
   t({
     given: 'search for element with attribute',
     should: 'find child element',
@@ -50,7 +46,7 @@ test('findByAttribute: shadow dom', async (t) => {
   document.body.append(context)
 
   // Search without passing context option
-  let target = await findByAttribute('data-test', 'shadow-child')
+  let target = await t.findByAttribute('data-test', 'shadow-child')
   t({
     given: 'search without passing context',
     should: 'find child element',
@@ -58,7 +54,7 @@ test('findByAttribute: shadow dom', async (t) => {
     expected,
   })
   // Search with passing context
-  target = await findByAttribute('data-test', 'shadow-child', context)
+  target = await t.findByAttribute('data-test', 'shadow-child', context)
   t({
     given: 'a search with host context',
     should: 'find child element',
@@ -94,14 +90,14 @@ test('findByAttribute: nested shadow dom', async (t) => {
   // Add the outer element to the document body
   document.body.appendChild(context)
 
-  let el = await findByAttribute('data-test', 'nested-shadow-element')
+  let el = await t.findByAttribute('data-test', 'nested-shadow-element')
   t({
     given: 'search for child without context',
     should: 'find child element',
     actual: el?.textContent,
     expected,
   })
-  el = await findByAttribute('data-test', 'nested-shadow-element')
+  el = await t.findByAttribute('data-test', 'nested-shadow-element')
 
   t({
     given: 'search for child with context',
@@ -143,7 +139,7 @@ test('findByAttribute: first element that satisfies query', async (t) => {
   // Add the outer element to the document body
   document.body.appendChild(context)
 
-  const el = await findByAttribute('data-test', 'shadow-child')
+  const el = await t.findByAttribute('data-test', 'shadow-child')
   t({
     given: 'search for child without context',
     should: 'find child element',
@@ -165,7 +161,7 @@ test('findByText: light dom', async (t) => {
   //Append elements to body
   document.body.append(firstEl, secondEl)
   // Search for secondEl
-  const second = await findByText(textContent)
+  const second = await t.findByText(textContent)
   t({
     given: 'search for element with attribute',
     should: 'find child element',
@@ -196,7 +192,7 @@ test('findByText: shadow dom', async (t) => {
   document.body.append(context)
 
   // Search without passing context option
-  let target = await findByText(textContent)
+  let target = await t.findByText(textContent)
   t({
     given: 'search without passing context',
     should: 'find child element',
@@ -204,7 +200,7 @@ test('findByText: shadow dom', async (t) => {
     expected: el,
   })
   // Search with passing context
-  target = await findByText(textContent, context)
+  target = await t.findByText(textContent, context)
   t({
     given: 'a search with host context',
     should: 'find child element',
@@ -239,14 +235,14 @@ test('findByText: nested shadow dom', async (t) => {
   // Add the outer element to the document body
   document.body.appendChild(context)
 
-  let el = await findByText(textContent)
+  let el = await t.findByText(textContent)
   t({
     given: 'search for child without context',
     should: 'find child element',
     actual: el,
     expected: innerContent,
   })
-  el = await findByText(textContent)
+  el = await t.findByText(textContent)
 
   t({
     given: 'search for child with context',
@@ -286,7 +282,7 @@ test('findByText: first element that satisfies query', async (t) => {
   // Add the outer element to the document body
   document.body.appendChild(context)
 
-  const el = await findByText(textContent)
+  const el = await t.findByText(textContent)
   t({
     given: 'search for child without context',
     should: 'find child element',
@@ -311,8 +307,8 @@ test('fireEvent', async (t) => {
   //Append elements to body
   document.body.append(button, target)
 
-  await fireEvent(button, 'click')
-  const el = await findByAttribute('data-test', 'target')
+  await t.fireEvent(button, 'click')
+  const el = await t.findByAttribute('data-test', 'target')
   t({
     given: 'search for element with attribute',
     should: 'find child element',
