@@ -2,9 +2,35 @@
 /// <reference lib="dom.iterable" />
 
 import { TestResultError, TestResult, BrowserSessionResult } from '@web/test-runner-core/browser/session.js'
-import { assert, Assertion, AssertionError } from './assert.js'
+import { assert as defaultAssert, Assertion, AssertionError } from './assert.js'
+import { wait } from '@plaited/utils'
+import { throws } from './throws.js'
+import { match } from './match.js'
+import { findByAttribute } from './find-by-attribute.js'
+import { findByText } from './find-by-text.js'
+import { fireEvent } from './fire-event.js'
 
-type TestCallback = (t: Assertion) => Promise<void> | void
+export interface TestAssertion extends Assertion {
+  findByAttribute: typeof findByAttribute
+  findByText: typeof findByText
+  fireEvent: typeof fireEvent
+  match: typeof match
+  throws: typeof throws
+  wait: typeof wait
+}
+
+export const assert: TestAssertion = Object.assign(defaultAssert, {
+  match,
+  throws,
+  wait,
+  findByAttribute,
+  findByText,
+  fireEvent,
+})
+
+export const t = assert
+
+type TestCallback = (t: TestAssertion) => Promise<void> | void
 
 interface Test {
   (name: string, cb: TestCallback): void

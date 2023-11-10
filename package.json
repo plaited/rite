@@ -25,6 +25,8 @@
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js",
+    "./assert": "./dist/assert.js",
+    "./helpers": "./dist/helpers.js",
     "./framework": "./dist/framework.js"
   },
   "files": [
@@ -57,7 +59,7 @@
   ],
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@plaited/utils": "5.0.1",
+    "@plaited/utils": "5.0.5",
     "@web/test-runner-core": "0.13.0"
   },
   "devDependencies": {
@@ -65,11 +67,12 @@
     "@web/dev-server-esbuild": "1.0.0",
     "@web/test-runner": "0.18.0",
     "@web/test-runner-playwright": "0.11.0",
-    "@commitlint/cli": "18.2.0",
-    "@commitlint/config-conventional": "18.1.0",
-    "@types/sinon": "17.0.0",
-    "@typescript-eslint/eslint-plugin": "6.9.1",
-    "@typescript-eslint/parser": "6.9.1",
+    "@commitlint/cli": "18.4.0",
+    "@commitlint/config-conventional": "18.4.0",
+    "@types/sinon": "17.0.1",
+    "@typescript-eslint/eslint-plugin": "6.10.0",
+    "@typescript-eslint/parser": "6.10.0",
+    "bun-types": "1.0.11",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.53.0",
     "eslint-plugin-compat": "4.2.0",
