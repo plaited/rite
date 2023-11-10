@@ -22,6 +22,8 @@ jobs:
           fi
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
       - name: Setup bun
         uses: oven-sh/setup-bun@v1
       - name: Setup
@@ -32,8 +34,8 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          npm version ${{ github.event.inputs.version }}
-          git push origin HEAD:main
+          npm version ${{ github.event.inputs.version }} -m "ci: publish %s [skip ci]"
+          git push --set-upstream origin HEAD:main
           gh release create ${{ github.event.inputs.version }} --generate-notes
       - name: Publish
         run: |
