@@ -2,7 +2,9 @@
 import { test, expect } from 'bun:test'
 import sinon from 'sinon'
 import { assert } from '../assert.js'
-
+import { throws } from '../throws.js'
+import { match } from '../match.js'
+import { wait } from '@plaited/utils'
 const sum = (...args: number[]) => {
   if (args.some((v) => Number.isNaN(v))) throw new TypeError('NaN')
   return args.reduce((acc, n) => acc + n, 0)
@@ -48,7 +50,7 @@ test('assert: sum()', () => {
     assert({
       given: 'NaN',
       should: 'throw',
-      actual: assert.throws(sum, 1, NaN),
+      actual: throws(sum, 1, NaN),
       expected: new TypeError('NaN').toString(),
     }),
   ).not.toThrow()
@@ -69,7 +71,7 @@ test('assert: handles async', async () => {
     const erred = (_: string) => {
       throw error
     }
-    const actual = await assert.throws(erred, 'irrelevant')
+    const actual = await throws(erred, 'irrelevant')
     assert({
       given: 'an async function that throws',
       should: 'await and return the value of the error',
@@ -87,7 +89,7 @@ test('assert: throw returns undefined when not thrown', async () => {
         throw error
       }
     }
-    const actual = await assert.throws(reverence, 'irreverent', true)
+    const actual = await throws(reverence, 'irreverent', true)
     assert({
       given: 'reverent receives irreverent attitude but has a pass',
       should: 'not throw error',
@@ -98,7 +100,7 @@ test('assert: throw returns undefined when not thrown', async () => {
 })
 
 test('wait()', async () => {
-  await assert.wait(20)
+  await wait(20)
   expect(() =>
     assert({
       given: 'a wait call',
@@ -115,7 +117,7 @@ test('match()', () => {
 
   const textToSearch = '<h1>Dialog Title</h1>'
   const pattern = 'Dialog Title'
-  const contains = assert.match(textToSearch)
+  const contains = match(textToSearch)
 
   expect(() =>
     assert({
