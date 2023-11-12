@@ -2,13 +2,17 @@
 /// <reference lib="dom.iterable" />
 
 import { TestResultError, TestResult, BrowserSessionResult } from '@web/test-runner-core/browser/session.js'
-import { assert as defaultAssert, Assertion, AssertionError } from './assert.js'
 import { wait } from '@plaited/utils'
-import { throws } from './throws.js'
-import { match } from './match.js'
-import { findByAttribute } from './find-by-attribute.js'
-import { findByText } from './find-by-text.js'
-import { fireEvent } from './fire-event.js'
+import {
+  throws,
+  match,
+  findByAttribute,
+  findByText,
+  fireEvent,
+  assert as defaultAssert,
+  Assertion,
+  AssertionError,
+} from '@plaited/assert'
 
 export interface TestAssertion extends Assertion {
   findByAttribute: typeof findByAttribute

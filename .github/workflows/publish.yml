@@ -9,9 +9,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-22.04
-    env:
-      GH_TOKEN: ${{ secrets.GH_PAT }}
-      NPM_TOKEN: ${{ secrets.NPM_PAT }}
+
     steps:
       - name: Validate input version
         run: |
@@ -20,23 +18,27 @@ jobs:
             echo "Error: Version must have the format 'x.y.z' or 'x.y.z-<string>', where x, y, and z are numbers."
             exit 1
           fi
+
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_PAT }}
-      - name: Setup bun
-        uses: oven-sh/setup-bun@v1
+
+      - uses: oven-sh/setup-bun@v1
+
       - name: Setup
         run: |
           bun install
           bun run build
+
       - name: Version
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          npm version ${{ github.event.inputs.version }} -m "ci: publish %s [skip ci]"
-          git push --set-upstream origin HEAD:main
-          gh release create ${{ github.event.inputs.version }} --generate-notes
+          bunx lerna version ${{ github.event.inputs.version }} --no-private --exact --conventional-commits --create-release github --message "ci: publish [skip ci]" --yes
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
       - name: Publish
         run: |
           echo "@plaited:registry=https://registry.npmjs.org/" > .npmrc
@@ -44,4 +46,6 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
           npm whoami
           npm config set registry https://registry.npmjs.org/
-          npm publish
+          bunx lerna publish from-package --yes
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_PAT }}
