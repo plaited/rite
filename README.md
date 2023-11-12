@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/plaited/rite/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/plaited/rite/actions/workflows/tests.yml)
 
-Web unit test framework based on RITEway.
+Web testing framework based on RITEway.
 
 To learn more about the [RITEway](https://github.com/paralleldrive/riteway)
 testing pattern read
