@@ -35,7 +35,7 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "test": "bunx web-test-runner"
+    "test": "bun run build && bunx web-test-runner"
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
