@@ -5,10 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.6 (2023-11-12)
 
-**Note:** Version bump only for package rite
-
-
-
-
-
-[label](../plaited/libs/rite/CHANGELOG.md)
+**Note:** Version bump only for package @plaited/assert
