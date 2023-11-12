@@ -39,7 +39,6 @@
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@plaited/utils": "5.1.1",
     "@plaited/assert": "5.0.5",
     "@web/test-runner-core": "0.13.0"
   },

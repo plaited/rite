@@ -36,8 +36,8 @@
     "test": "bun run build && bun test src/**/*.spec.ts"
   },
   "types": "./dist/index.d.ts",
-  "peerDependencies": {
-    "@plaited/utils": ">=5.1.1"
+  "dependencies": {
+    "@plaited/utils": "^5.1.1"
   },
   "devDependencies": {
     "@plaited/utils": "5.1.1",
