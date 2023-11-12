@@ -37,10 +37,13 @@
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@plaited/utils": "^5.1.1"
+    "@plaited/utils": "^5.1.2"
+  },
+  "peerDependencies": {
+    "@plaited/utils": ">=5.1.2"
   },
   "devDependencies": {
-    "@plaited/utils": "5.1.1",
+    "@plaited/utils": "5.1.2",
     "@types/sinon": "17.0.1",
     "bun-types": "1.0.11",
     "sinon": "17.0.1"
